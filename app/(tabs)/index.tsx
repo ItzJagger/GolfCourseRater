@@ -3,6 +3,13 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
+type GolfCourse = {
+  id: string; 
+  name: string;
+  latitude: number;
+  longitude: number;
+};
+
 export default function HomeScreen() {
   const [coords, setCoords] = useState<{
     latitude: number;
@@ -27,6 +34,15 @@ export default function HomeScreen() {
       });
     })();
   }, []);
+
+  const mocktest: GolfCourse[] = [
+    {
+      id: "1",
+      name: "Royal Ashburn",
+      latitude: coords ? coords.latitude + 0.01 : 0,
+      longitude: coords ? coords.longitude + 0.01 : 0,
+    },
+  ];
 
   if (errorMsg) {
     return (
@@ -57,6 +73,13 @@ export default function HomeScreen() {
       showsUserLocation
     >
       <Marker coordinate={coords} title="You are here" />
+      {mocktest.map((course)=>(
+         <Marker
+          key={course.id}
+          coordinate={{ latitude: course.latitude, longitude: course.longitude }}
+          title={course.name}
+        />
+      ))}
     </MapView>
   );
 }
