@@ -1,4 +1,5 @@
 import * as Location from "expo-location";
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
@@ -78,7 +79,8 @@ export default function HomeScreen() {
           key={course.id}
           coordinate={{ latitude: course.latitude, longitude: course.longitude }}
           title={course.name}
-        />
+          onPress={() => router.push(`/course/${course.id}?name=${encodeURIComponent(course.name)}`)}
+      />
       ))}
     </MapView>
   );
